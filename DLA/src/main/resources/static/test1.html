@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>User List</h1>
+
+<table id="userTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Sex</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Username</th>
+            <!-- Add more columns as needed -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- User data will be dynamically added here -->
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetch data from the API
+        fetch('http://localhost:8080/users/getAll')
+            .then(response => response.json())
+            .then(users => {
+                // Update the HTML table with user data
+                const userTable = document.getElementById('userTable');
+                const tbody = userTable.getElementsByTagName('tbody')[0];
+
+                users.forEach(user => {
+                    const row = tbody.insertRow();
+                    row.insertCell(0).textContent = user.id;
+                    row.insertCell(1).textContent = user.firstName;
+                    row.insertCell(2).textContent = user.lastName;
+                    row.insertCell(3).textContent = user.age;
+                    row.insertCell(4).textContent = user.sex;
+                    row.insertCell(5).textContent = user.phoneNumber;
+                    row.insertCell(6).textContent = user.address;
+                    row.insertCell(7).textContent = user.username;
+                    // Add more cells for additional user properties
+
+                    // Customize this based on your User entity structure
+                });
+            })
+            .catch(error => console.error('Error fetching user data:', error));
+    });
+</script>
+
+</body>
+</html>
